@@ -283,9 +283,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="toast" id="toast"></div>
 
 <script>
-const GH_USER  = 'luchoplay';
-const GH_REPO  = 'mi-tarjeta';
-const GH_TOKEN = [atob('Z2hwX2RoWEViNWpr'),atob('U2Y1MVRGdVVVTGpH'),atob('U0VEcjRxM3NEbzBO'),atob('SUR4RA==')].join('');
+const BIN_ID   = '69ef2727aaba88219741337a';
+const BIN_KEY  = '$2a$10$kVf6hv8FimQ/eIFW7n8q8eltAaqzXFw8NdWD7NCuc.0MRDRpm2SwW';
 const PIN      = '251179';
 
 let D = {};
@@ -307,14 +306,14 @@ function mostrar(id){
 function irTarjeta(){renderTarjeta();mostrar('screenCard');}
 function irPin(){pinClear();mostrar('screenPin');}
 
-// ── CARGAR DATOS DESDE GITHUB ──
+// ── CARGAR DATOS DESDE JSONBIN ──
 async function cargarDatos(){
   try{
-    const res = await fetch('https://luchoplay.github.io/mi-tarjeta/datos.json?t='+Date.now());
+    const res = await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID+'/latest',{
+      headers:{'X-Master-Key':BIN_KEY,'X-Bin-Meta':'false'}
+    });
     D = await res.json();
-  } catch(e){
-    D = {};
-  }
+  } catch(e){ D = {}; }
   irTarjeta();
 }
 
@@ -438,7 +437,7 @@ function prevFoto(){
   else{prev.textContent=ini;}
 }
 
-// ── GUARDAR EN GITHUB (solo datos.json) ──
+// ── GUARDAR EN JSONBIN ──
 async function guardarDatos(){
   const btn=document.getElementById('btnSave');
   btn.disabled=true;
@@ -465,23 +464,11 @@ async function guardarDatos(){
   };
 
   try{
-    // Obtener SHA del datos.json
-    const metaRes=await fetch('https://api.github.com/repos/'+GH_USER+'/'+GH_REPO+'/contents/datos.json',{
-      headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json'}
-    });
-    const meta=await metaRes.json();
-    const sha=meta.sha;
-
-    // Subir datos.json actualizado
-    const contenido=JSON.stringify(D,null,2);
-    const encoded=btoa(unescape(encodeURIComponent(contenido)));
-
-    const res=await fetch('https://api.github.com/repos/'+GH_USER+'/'+GH_REPO+'/contents/datos.json',{
+    const res=await fetch('https://api.jsonbin.io/v3/b/'+BIN_ID,{
       method:'PUT',
-      headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
-      body:JSON.stringify({message:'Actualizar datos tarjeta',content:encoded,sha})
+      headers:{'Content-Type':'application/json','X-Master-Key':BIN_KEY},
+      body:JSON.stringify(D)
     });
-
     document.getElementById('savingOverlay').classList.remove('show');
     if(res.ok){
       irTarjeta();
@@ -492,7 +479,6 @@ async function guardarDatos(){
   } catch(e){
     document.getElementById('savingOverlay').classList.remove('show');
     showToast('Error de conexión');
-    console.error(e);
   }
   btn.disabled=false;
 }
