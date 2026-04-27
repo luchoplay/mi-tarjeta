@@ -68,8 +68,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn-secondary:active{background:var(--surface2);}
 .btn-secondary svg{width:15px;height:15px;stroke:var(--muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
 
-/* ── BOTON OCULTO EDITOR ── */
-.secret-btn{position:fixed;top:0;right:0;width:60px;height:60px;z-index:100;opacity:0;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+/* ── BOTON EDITOR ── */
+.secret-btn{position:fixed;top:1rem;right:1rem;width:36px;height:36px;z-index:100;cursor:pointer;background:var(--surface);border:0.5px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0.4;transition:opacity 0.2s;}
+.secret-btn:hover,.secret-btn:active{opacity:1;}
 
 /* ── PIN SCREEN ── */
 .pin-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;gap:1.5rem;}
@@ -124,8 +125,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 <!-- ══ TARJETA ══ -->
 <div id="screenCard" class="screen active">
-  <!-- Botón secreto esquina superior derecha -->
-  <div class="secret-btn" onclick="irPin()"></div>
+  <!-- Botón editor esquina superior derecha -->
+  <div class="secret-btn" onclick="irPin()">
+    <svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:var(--muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+  </div>
 
   <div class="wrap">
     <div class="hero fade-up d1">
