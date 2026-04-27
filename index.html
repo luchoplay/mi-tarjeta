@@ -15,561 +15,573 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
 :root{
-  --bg:#080810;
-  --surface:#0f0f1a;
-  --surface2:#171726;
-  --surface3:#1e1e30;
-  --border:rgba(255,255,255,0.06);
-  --border2:rgba(255,255,255,0.11);
-  --text:#ede9e0;
-  --muted:#7a7a90;
-  --muted2:#5a5a72;
-  --gold:#c9a96e;
-  --gold2:#e2c48a;
-  --gold-glow:rgba(201,169,110,0.15);
-  --gold-line:rgba(201,169,110,0.2);
+  --bg:#080810;--surface:#0f0f1a;--surface2:#171726;--surface3:#1e1e30;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);
+  --text:#ede9e0;--muted:#7a7a90;--muted2:#5a5a72;
+  --gold:#c9a96e;--gold2:#e2c48a;
 }
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(201,169,110,0.07) 0%,transparent 60%);pointer-events:none;z-index:0;}
 
-html,body{
-  min-height:100vh;
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Jost',sans-serif;
-  font-weight:300;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-}
+/* ── SCREENS ── */
+.screen{display:none;flex-direction:column;min-height:100vh;position:relative;z-index:1;}
+.screen.active{display:flex;}
 
-/* ── BACKGROUND TEXTURE ── */
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,169,110,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(100,80,180,0.04) 0%, transparent 50%);
-  pointer-events:none;
-  z-index:0;
-}
-
-.wrap{position:relative;z-index:1;max-width:480px;margin:0 auto;padding-bottom:7rem;}
-
-/* ── HERO ── */
-.hero{
-  padding:3.5rem 2rem 2.5rem;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  position:relative;
-}
-
-.hero::after{
-  content:'';
-  position:absolute;
-  bottom:0;left:2rem;right:2rem;
-  height:0.5px;
-  background:linear-gradient(90deg,transparent,var(--gold-line),transparent);
-}
-
-/* avatar */
-.avatar-shell{
-  position:relative;
-  width:108px;height:108px;
-  margin-bottom:1.5rem;
-}
-
-.avatar-ring-outer{
-  position:absolute;
-  inset:-10px;
-  border-radius:50%;
-  border:0.5px solid rgba(201,169,110,0.18);
-  animation:spinRing 20s linear infinite;
-}
-
-.avatar-ring-inner{
-  position:absolute;
-  inset:-4px;
-  border-radius:50%;
-  border:0.5px dashed rgba(201,169,110,0.25);
-  animation:spinRing 12s linear infinite reverse;
-}
-
+/* ── TARJETA ── */
+.wrap{max-width:480px;margin:0 auto;padding-bottom:7rem;width:100%;}
+.hero{padding:3.5rem 2rem 2.5rem;display:flex;flex-direction:column;align-items:center;position:relative;}
+.hero::after{content:'';position:absolute;bottom:0;left:2rem;right:2rem;height:0.5px;background:linear-gradient(90deg,transparent,rgba(201,169,110,0.2),transparent);}
+.avatar-shell{position:relative;width:108px;height:108px;margin-bottom:1.5rem;}
+.avatar-ring-outer{position:absolute;inset:-10px;border-radius:50%;border:0.5px solid rgba(201,169,110,0.18);animation:spinRing 20s linear infinite;}
+.avatar-ring-inner{position:absolute;inset:-4px;border-radius:50%;border:0.5px dashed rgba(201,169,110,0.25);animation:spinRing 12s linear infinite reverse;}
 @keyframes spinRing{to{transform:rotate(360deg)}}
-
-.avatar-img{
-  width:108px;height:108px;
-  border-radius:50%;
-  object-fit:cover;
-  border:1.5px solid var(--gold);
-  display:block;
-  background:var(--surface2);
-}
-
-.avatar-initials{
-  width:108px;height:108px;
-  border-radius:50%;
-  border:1.5px solid var(--gold);
-  background:var(--surface2);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Cormorant Garamond',serif;
-  font-size:2.5rem;
-  color:var(--gold);
-  letter-spacing:-1px;
-}
-
-.avatar-dot{
-  position:absolute;
-  bottom:4px;right:4px;
-  width:16px;height:16px;
-  border-radius:50%;
-  background:#2d9e5f;
-  border:2px solid var(--bg);
-}
-
-/* name */
-.hero-name{
-  font-family:'Cormorant Garamond',serif;
-  font-size:2rem;
-  font-weight:400;
-  letter-spacing:0.02em;
-  text-align:center;
-  line-height:1.1;
-  color:var(--text);
-}
-
-.hero-name em{
-  font-style:italic;
-  color:var(--gold);
-}
-
-.hero-role{
-  margin-top:0.5rem;
-  font-size:0.72rem;
-  letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:var(--muted);
-  text-align:center;
-  font-weight:300;
-  line-height:1.5;
-  max-width:260px;
-}
-
-.hero-company{
-  margin-top:0.3rem;
-  font-size:0.85rem;
-  color:var(--gold);
-  text-align:center;
-  font-weight:400;
-  letter-spacing:0.05em;
-}
-
-/* ── SECTIONS ── */
+.avatar-img{width:108px;height:108px;border-radius:50%;object-fit:cover;border:1.5px solid var(--gold);display:block;background:var(--surface2);}
+.avatar-initials{width:108px;height:108px;border-radius:50%;border:1.5px solid var(--gold);background:var(--surface2);display:none;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--gold);}
+.avatar-dot{position:absolute;bottom:4px;right:4px;width:16px;height:16px;border-radius:50%;background:#2d9e5f;border:2px solid var(--bg);}
+.hero-name{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:400;letter-spacing:0.02em;text-align:center;line-height:1.1;}
+.hero-name em{font-style:italic;color:var(--gold);}
+.hero-role{margin-top:.5rem;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-align:center;font-weight:300;line-height:1.5;max-width:260px;}
+.hero-company{margin-top:.3rem;font-size:.85rem;color:var(--gold);text-align:center;font-weight:400;letter-spacing:.05em;}
 .section{padding:1.75rem 1.5rem 0;}
-
-.section-label{
-  font-size:0.62rem;
-  letter-spacing:0.25em;
-  text-transform:uppercase;
-  color:var(--muted2);
-  margin-bottom:0.75rem;
-  display:flex;
-  align-items:center;
-  gap:0.75rem;
-}
-
-.section-label::after{
-  content:'';
-  flex:1;
-  height:0.5px;
-  background:var(--border2);
-}
-
-/* ── CONTACT ROWS ── */
-.rows{display:flex;flex-direction:column;gap:0.5rem;}
-
-.row{
-  display:flex;
-  align-items:center;
-  gap:0.85rem;
-  padding:0.85rem 1rem;
-  background:var(--surface);
-  border:0.5px solid var(--border);
-  border-radius:14px;
-  text-decoration:none;
-  color:var(--text);
-  transition:background 0.2s,border-color 0.2s,transform 0.15s;
-  cursor:pointer;
-  position:relative;
-  overflow:hidden;
-}
-
-.row::before{
-  content:'';
-  position:absolute;
-  left:0;top:0;bottom:0;
-  width:2px;
-  background:linear-gradient(180deg,transparent,var(--gold),transparent);
-  opacity:0;
-  transition:opacity 0.2s;
-}
-
-.row:active{
-  background:var(--surface2);
-  border-color:var(--border2);
-  transform:scale(0.99);
-}
-
-.row:active::before{opacity:1;}
-
-.row-icon{
-  width:40px;height:40px;
-  border-radius:11px;
-  background:var(--surface2);
-  border:0.5px solid var(--border2);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-
-.row-icon svg{
-  width:17px;height:17px;
-  stroke:var(--gold);
-  fill:none;
-  stroke-width:1.4;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-
+.section-label{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted2);margin-bottom:.75rem;display:flex;align-items:center;gap:.75rem;}
+.section-label::after{content:'';flex:1;height:0.5px;background:var(--border2);}
+.rows{display:flex;flex-direction:column;gap:.5rem;}
+.row{display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;background:var(--surface);border:0.5px solid var(--border);border-radius:14px;text-decoration:none;color:var(--text);transition:background .2s,transform .15s;cursor:pointer;position:relative;overflow:hidden;}
+.row:active{background:var(--surface2);transform:scale(.99);}
+.row-icon{width:40px;height:40px;border-radius:11px;background:var(--surface2);border:0.5px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.row-icon svg{width:17px;height:17px;stroke:var(--gold);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;}
 .row-body{flex:1;min-width:0;}
-
-.row-lbl{
-  font-size:0.65rem;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:0.18rem;
-}
-
-.row-val{
-  font-size:0.9rem;
-  font-weight:400;
-  color:var(--text);
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.row-arrow{
-  color:var(--muted2);
-  font-size:1rem;
-  flex-shrink:0;
-}
-
-/* address multiline */
-.row-val.multiline{
-  white-space:normal;
-  line-height:1.5;
-  font-size:0.85rem;
-}
-
-/* ── SOCIAL GRID ── */
-.social-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:0.5rem;
-}
-
-.social-btn{
-  display:flex;
-  align-items:center;
-  gap:0.6rem;
-  padding:0.8rem 0.9rem;
-  background:var(--surface);
-  border:0.5px solid var(--border);
-  border-radius:14px;
-  text-decoration:none;
-  color:var(--text);
-  font-size:0.83rem;
-  font-weight:400;
-  transition:background 0.2s,border-color 0.2s;
-  cursor:pointer;
-}
-
-.social-btn:active{
-  background:var(--surface2);
-  border-color:var(--border2);
-}
-
-.social-btn svg{
-  width:16px;height:16px;
-  stroke:var(--gold);
-  fill:none;
-  stroke-width:1.4;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-  flex-shrink:0;
-}
-
-/* ── SHARE BAR ── */
-.share-bar{
-  position:fixed;
-  bottom:0;left:0;right:0;
-  padding:1rem 1.5rem 1.75rem;
-  background:linear-gradient(to top,var(--bg) 55%,transparent);
-  display:flex;
-  gap:0.6rem;
-  z-index:50;
-}
-
-.btn-primary{
-  flex:1;
-  display:flex;align-items:center;justify-content:center;
-  gap:0.55rem;
-  padding:0.95rem 1rem;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  color:#080810;
-  font-family:'Jost',sans-serif;
-  font-size:0.88rem;
-  font-weight:500;
-  letter-spacing:0.04em;
-  border:none;border-radius:14px;
-  cursor:pointer;
-  transition:opacity 0.15s,transform 0.1s;
-  box-shadow:0 4px 20px rgba(201,169,110,0.25);
-}
-
-.btn-primary:active{opacity:0.85;transform:scale(0.98);}
-
-.btn-primary svg{
-  width:17px;height:17px;
-  stroke:#080810;fill:none;
-  stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;
-}
-
-.btn-secondary{
-  display:flex;align-items:center;justify-content:center;
-  gap:0.5rem;
-  padding:0.95rem 1rem;
-  background:var(--surface);
-  border:0.5px solid var(--border2);
-  color:var(--text);
-  font-family:'Jost',sans-serif;
-  font-size:0.83rem;
-  font-weight:300;
-  border-radius:14px;
-  cursor:pointer;
-  transition:background 0.15s;
-  white-space:nowrap;
-}
-
+.row-lbl{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.18rem;}
+.row-val{font-size:.9rem;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.row-val.multiline{white-space:normal;line-height:1.5;font-size:.85rem;}
+.row-arrow{color:var(--muted2);font-size:1rem;flex-shrink:0;}
+.social-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
+.social-btn{display:flex;align-items:center;gap:.6rem;padding:.8rem .9rem;background:var(--surface);border:0.5px solid var(--border);border-radius:14px;text-decoration:none;color:var(--text);font-size:.83rem;font-weight:400;transition:background .2s;cursor:pointer;}
+.social-btn:active{background:var(--surface2);}
+.social-btn svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.share-bar{position:fixed;bottom:0;left:0;right:0;padding:1rem 1.5rem 1.75rem;background:linear-gradient(to top,var(--bg) 55%,transparent);display:flex;gap:.6rem;z-index:50;}
+.btn-primary{flex:1;display:flex;align-items:center;justify-content:center;gap:.55rem;padding:.95rem 1rem;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#080810;font-family:'Jost',sans-serif;font-size:.88rem;font-weight:500;letter-spacing:.04em;border:none;border-radius:14px;cursor:pointer;transition:opacity .15s,transform .1s;box-shadow:0 4px 20px rgba(201,169,110,0.25);}
+.btn-primary:active{opacity:.85;transform:scale(.98);}
+.btn-primary svg{width:17px;height:17px;stroke:#080810;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.btn-secondary{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.95rem 1rem;background:var(--surface);border:0.5px solid var(--border2);color:var(--text);font-family:'Jost',sans-serif;font-size:.83rem;font-weight:300;border-radius:14px;cursor:pointer;transition:background .15s;white-space:nowrap;}
 .btn-secondary:active{background:var(--surface2);}
+.btn-secondary svg{width:15px;height:15px;stroke:var(--muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
 
-.btn-secondary svg{
-  width:15px;height:15px;
-  stroke:var(--muted);fill:none;
-  stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;
-}
+/* ── BOTON OCULTO EDITOR ── */
+.secret-btn{position:fixed;top:0;right:0;width:60px;height:60px;z-index:100;opacity:0;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+
+/* ── PIN SCREEN ── */
+.pin-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;gap:1.5rem;}
+.pin-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--gold);text-align:center;}
+.pin-sub{font-size:.8rem;color:var(--muted);letter-spacing:.1em;}
+.pin-dots{display:flex;gap:.75rem;margin:.5rem 0;}
+.pin-dot{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--muted2);transition:background .2s,border-color .2s;}
+.pin-dot.filled{background:var(--gold);border-color:var(--gold);}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;width:100%;max-width:280px;}
+.pin-key{display:flex;align-items:center;justify-content:center;height:64px;background:var(--surface);border:0.5px solid var(--border2);border-radius:16px;font-size:1.4rem;font-weight:300;color:var(--text);cursor:pointer;transition:background .15s,transform .1s;-webkit-tap-highlight-color:transparent;}
+.pin-key:active{background:var(--surface3);transform:scale(.95);}
+.pin-key.del{font-size:1rem;color:var(--muted);}
+.pin-key.empty{background:transparent;border:none;cursor:default;}
+.pin-error{font-size:.8rem;color:#e05555;height:1rem;text-align:center;}
+.btn-back-pin{display:flex;align-items:center;gap:.4rem;background:none;border:none;color:var(--muted);font-family:'Jost',sans-serif;font-size:.85rem;cursor:pointer;padding:.5rem 1rem;border-radius:8px;margin-top:.5rem;}
+.btn-back-pin svg{width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ── EDITOR SCREEN ── */
+.editor-header{background:var(--surface);border-bottom:0.5px solid var(--border);padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
+.editor-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gold);}
+.btn-back-ed{display:flex;align-items:center;gap:.4rem;background:none;border:none;color:var(--muted);font-family:'Jost',sans-serif;font-size:.85rem;cursor:pointer;padding:.4rem .7rem;border-radius:8px;}
+.btn-save-ed{background:var(--gold);color:#080810;border:none;font-family:'Jost',sans-serif;font-size:.85rem;font-weight:500;padding:.5rem 1.1rem;border-radius:10px;cursor:pointer;}
+.btn-save-ed:disabled{opacity:.5;cursor:not-allowed;}
+.editor-body{flex:1;padding:1.5rem;display:flex;flex-direction:column;gap:1.25rem;max-width:480px;margin:0 auto;width:100%;padding-bottom:3rem;}
+.field-group{display:flex;flex-direction:column;gap:.45rem;}
+.field-group label{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
+.field-group input,.field-group textarea{background:var(--surface);border:0.5px solid var(--border2);border-radius:10px;padding:.75rem 1rem;color:var(--text);font-family:'Jost',sans-serif;font-size:.9rem;font-weight:300;width:100%;outline:none;transition:border-color .2s;}
+.field-group input:focus,.field-group textarea:focus{border-color:var(--gold);}
+.field-group textarea{resize:vertical;min-height:70px;line-height:1.5;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+.section-sep{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);opacity:.7;padding-top:.5rem;border-top:0.5px solid var(--border);}
+.foto-row{display:flex;align-items:center;gap:1rem;}
+.avatar-preview{width:52px;height:52px;border-radius:50%;background:var(--surface2);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);overflow:hidden;flex-shrink:0;}
+.avatar-preview img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.saving-overlay{position:fixed;inset:0;background:rgba(8,8,16,0.85);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;z-index:300;display:none;}
+.saving-overlay.show{display:flex;}
+.saving-spinner{width:40px;height:40px;border:2px solid var(--border2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.saving-text{font-size:.85rem;color:var(--muted);letter-spacing:.1em;}
 
 /* ── TOAST ── */
-.toast{
-  position:fixed;
-  top:1.25rem;left:50%;
-  transform:translateX(-50%) translateY(-70px);
-  background:var(--surface3);
-  border:0.5px solid var(--border2);
-  color:var(--text);
-  padding:0.55rem 1.1rem;
-  border-radius:99px;
-  font-size:0.82rem;
-  white-space:nowrap;
-  transition:transform 0.3s cubic-bezier(.34,1.56,.64,1);
-  z-index:200;
-  pointer-events:none;
-}
-
+.toast{position:fixed;top:1.25rem;left:50%;transform:translateX(-50%) translateY(-70px);background:var(--surface3);border:0.5px solid var(--border2);color:var(--text);padding:.55rem 1.1rem;border-radius:99px;font-size:.82rem;white-space:nowrap;transition:transform .3s cubic-bezier(.34,1.56,.64,1);z-index:400;pointer-events:none;}
 .toast.show{transform:translateX(-50%) translateY(0);}
 
-/* ── ANIMATIONS ── */
-.fade-up{
-  opacity:0;
-  animation:fadeUp 0.5s ease forwards;
-}
-
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(14px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-.d1{animation-delay:0.05s}
-.d2{animation-delay:0.12s}
-.d3{animation-delay:0.19s}
-.d4{animation-delay:0.26s}
-.d5{animation-delay:0.33s}
-.d6{animation-delay:0.40s}
-.d7{animation-delay:0.47s}
-.d8{animation-delay:0.54s}
+.fade-up{opacity:0;animation:fadeUp 0.5s ease forwards;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.d1{animation-delay:.05s}.d2{animation-delay:.12s}.d3{animation-delay:.19s}
+.d4{animation-delay:.26s}.d5{animation-delay:.33s}
 </style>
 </head>
 <body>
 
-<div class="wrap">
+<!-- ══ TARJETA ══ -->
+<div id="screenCard" class="screen active">
+  <!-- Botón secreto esquina superior derecha -->
+  <div class="secret-btn" onclick="irPin()"></div>
 
-  <!-- ══ HERO ══ -->
-  <div class="hero fade-up d1">
-    <div class="avatar-shell">
-      <div class="avatar-ring-outer"></div>
-      <div class="avatar-ring-inner"></div>
-      <img
-        class="avatar-img"
-        src="https://luchoplay.github.io/mi-tarjeta/foto.jpg"
-        alt="Luis Damián Gutiérrez Manera"
-        onerror="this.style.display='none';document.getElementById('initials').style.display='flex';"
-      >
-      <div class="avatar-initials" id="initials" style="display:none;">LG</div>
-      <div class="avatar-dot"></div>
+  <div class="wrap">
+    <div class="hero fade-up d1">
+      <div class="avatar-shell">
+        <div class="avatar-ring-outer"></div>
+        <div class="avatar-ring-inner"></div>
+        <img id="heroImg" class="avatar-img"
+          src="https://luchoplay.github.io/mi-tarjeta/foto.jpg"
+          alt="Luis Damián Gutiérrez Manera"
+          onerror="this.style.display='none';document.getElementById('heroInitials').style.display='flex';">
+        <div class="avatar-initials" id="heroInitials">LG</div>
+        <div class="avatar-dot"></div>
+      </div>
+      <h1 class="hero-name" id="heroName">Luis Damián<br><em>Gutiérrez Manera</em></h1>
+      <p class="hero-role" id="heroRole">Asesor de Inversión en Activos Históricos</p>
+      <p class="hero-company" id="heroCompany">Emigut 327 Corp</p>
     </div>
-    <h1 class="hero-name">Luis Damián<br><em>Gutiérrez Manera</em></h1>
-    <p class="hero-role">Asesor de Inversión en Activos Históricos</p>
-    <p class="hero-company">Emigut 327 Corp</p>
+
+    <div class="section fade-up d2">
+      <div class="section-label">Contacto</div>
+      <div class="rows" id="rowsContacto"></div>
+    </div>
+
+    <div class="section fade-up d3" id="secDir" style="display:none">
+      <div class="section-label">Ubicación</div>
+      <div class="rows" id="rowsDir"></div>
+    </div>
+
+    <div class="section fade-up d4" id="secWeb" style="display:none">
+      <div class="section-label">Sitio web</div>
+      <div class="rows" id="rowsWeb"></div>
+    </div>
+
+    <div class="section fade-up d5" id="secSocial" style="display:none">
+      <div class="section-label">Redes sociales</div>
+      <div class="social-grid" id="socialGrid"></div>
+    </div>
+
+    <div style="height:1rem"></div>
   </div>
 
-  <!-- ══ CONTACTO ══ -->
-  <div class="section fade-up d2">
-    <div class="section-label">Contacto</div>
-    <div class="rows">
-
-      <a class="row" href="tel:+59891682711">
-        <div class="row-icon">
-          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 6.18 2 2 0 015.05 4h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L9.09 11.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-        </div>
-        <div class="row-body">
-          <div class="row-lbl">Teléfono</div>
-          <div class="row-val">+598 91 682 711</div>
-        </div>
-        <div class="row-arrow">›</div>
-      </a>
-
-      <a class="row" href="https://wa.me/59891682711" target="_blank">
-        <div class="row-icon">
-          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-        </div>
-        <div class="row-body">
-          <div class="row-lbl">WhatsApp</div>
-          <div class="row-val">+598 91 682 711</div>
-        </div>
-        <div class="row-arrow">›</div>
-      </a>
-
-      <a class="row" href="mailto:caratulas123@gmail.com">
-        <div class="row-icon">
-          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </div>
-        <div class="row-body">
-          <div class="row-lbl">Email</div>
-          <div class="row-val">caratulas123@gmail.com</div>
-        </div>
-        <div class="row-arrow">›</div>
-      </a>
-
-    </div>
+  <div class="share-bar">
+    <button class="btn-secondary" onclick="downloadVCF()">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Guardar contacto
+    </button>
+    <button class="btn-primary" onclick="shareCard()">
+      <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      Compartir tarjeta
+    </button>
   </div>
-
-  <!-- ══ DIRECCIÓN ══ -->
-  <div class="section fade-up d4">
-    <div class="section-label">Ubicación</div>
-    <div class="rows">
-      <a class="row" href="https://maps.google.com/?q=León+Jude+1305,+San+José+de+Mayo,+Uruguay" target="_blank">
-        <div class="row-icon">
-          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <div class="row-body">
-          <div class="row-lbl">Dirección</div>
-          <div class="row-val multiline">León Jude 1305 Bis<br>Ciudad de Rodríguez, San José de Mayo<br>CP 80400 · Uruguay</div>
-        </div>
-        <div class="row-arrow">›</div>
-      </a>
-    </div>
-  </div>
-
-  <!-- ══ REDES ══ -->
-  <div class="section fade-up d5">
-    <div class="section-label">Redes sociales</div>
-    <div class="social-grid">
-
-      <a class="social-btn" href="https://www.instagram.com/emigut327/" target="_blank">
-        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        Instagram
-      </a>
-
-      <a class="social-btn" href="https://github.com/luchoplay" target="_blank">
-        <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-        GitHub
-      </a>
-
-    </div>
-  </div>
-
-  <div style="height:1rem"></div>
 </div>
 
-<!-- ══ SHARE BAR ══ -->
-<div class="share-bar">
-  <button class="btn-secondary" onclick="downloadVCF()">
-    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-    Guardar contacto
-  </button>
-  <button class="btn-primary" onclick="shareCard()">
-    <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-    Compartir tarjeta
-  </button>
+<!-- ══ PIN ══ -->
+<div id="screenPin" class="screen">
+  <div class="pin-screen">
+    <p class="pin-title">Acceso editor</p>
+    <p class="pin-sub">Ingresá tu PIN</p>
+    <div class="pin-dots" id="pinDots">
+      <div class="pin-dot" id="pd0"></div>
+      <div class="pin-dot" id="pd1"></div>
+      <div class="pin-dot" id="pd2"></div>
+      <div class="pin-dot" id="pd3"></div>
+      <div class="pin-dot" id="pd4"></div>
+      <div class="pin-dot" id="pd5"></div>
+    </div>
+    <p class="pin-error" id="pinError"></p>
+    <div class="pin-pad">
+      <div class="pin-key" onclick="pinPress('1')">1</div>
+      <div class="pin-key" onclick="pinPress('2')">2</div>
+      <div class="pin-key" onclick="pinPress('3')">3</div>
+      <div class="pin-key" onclick="pinPress('4')">4</div>
+      <div class="pin-key" onclick="pinPress('5')">5</div>
+      <div class="pin-key" onclick="pinPress('6')">6</div>
+      <div class="pin-key" onclick="pinPress('7')">7</div>
+      <div class="pin-key" onclick="pinPress('8')">8</div>
+      <div class="pin-key" onclick="pinPress('9')">9</div>
+      <div class="pin-key empty"></div>
+      <div class="pin-key" onclick="pinPress('0')">0</div>
+      <div class="pin-key del" onclick="pinDel()">⌫</div>
+    </div>
+    <button class="btn-back-pin" onclick="irTarjeta()">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Cancelar
+    </button>
+  </div>
 </div>
 
-<!-- TOAST -->
+<!-- ══ EDITOR ══ -->
+<div id="screenEditor" class="screen">
+  <div class="editor-header">
+    <button class="btn-back-ed" onclick="irTarjeta()">
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;"><polyline points="15 18 9 12 15 6"/></svg>
+      Volver
+    </button>
+    <span class="editor-title">Editar tarjeta</span>
+    <button class="btn-save-ed" id="btnSave" onclick="guardarEnGitHub()">Guardar</button>
+  </div>
+
+  <div class="editor-body">
+    <div class="field-group">
+      <label>Foto (URL de imagen)</label>
+      <div class="foto-row">
+        <div class="avatar-preview" id="prevAvatar">LG</div>
+        <input type="url" id="eFoto" placeholder="https://..." oninput="prevFoto()">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-group"><label>Nombre</label><input type="text" id="eNombre"></div>
+      <div class="field-group"><label>Apellido</label><input type="text" id="eApellido"></div>
+    </div>
+    <div class="field-group"><label>Cargo / Profesión</label><input type="text" id="eCargo"></div>
+    <div class="field-group"><label>Empresa</label><input type="text" id="eEmpresa"></div>
+
+    <p class="section-sep">Contacto</p>
+    <div class="field-group"><label>Teléfono / WhatsApp</label><input type="tel" id="eTel"></div>
+    <div class="field-group"><label>Email</label><input type="email" id="eEmail"></div>
+
+    <p class="section-sep">Opcionales</p>
+    <div class="field-group"><label>Sitio web</label><input type="url" id="eWeb" placeholder="https://"></div>
+    <div class="field-group"><label>Dirección</label><textarea id="eDir"></textarea></div>
+
+    <p class="section-sep">Redes sociales</p>
+    <div class="field-group"><label>Instagram</label><input type="url" id="eIg" placeholder="https://instagram.com/usuario"></div>
+    <div class="field-group"><label>LinkedIn</label><input type="url" id="eLi" placeholder="https://linkedin.com/in/usuario"></div>
+    <div class="field-group"><label>Twitter / X</label><input type="url" id="eTw" placeholder="https://twitter.com/usuario"></div>
+    <div class="field-group"><label>GitHub</label><input type="url" id="eGh" placeholder="https://github.com/usuario"></div>
+  </div>
+</div>
+
+<!-- Saving overlay -->
+<div class="saving-overlay" id="savingOverlay">
+  <div class="saving-spinner"></div>
+  <p class="saving-text">Guardando en GitHub...</p>
+</div>
+
+<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
+// ── CONFIGURACIÓN GITHUB ──
+const GH_USER  = 'luchoplay';
+const GH_REPO  = 'mi-tarjeta';
+const GH_FILE  = 'index.html';
+const GH_TOKEN = atob('Z2hwX0Q5b3RPYlVGd01ZTkhJYUg0S2xRRXpjTFV4R1YwM3ROWGkw');
+const PIN      = '251179';
+
+// ── DATOS INICIALES ──
+let D = {
+  nombre:'Luis Damián', apellido:'Gutiérrez Manera',
+  cargo:'Asesor de Inversión en Activos Históricos',
+  empresa:'Emigut 327 Corp',
+  tel:'+598 91 682 711',
+  email:'caratulas123@gmail.com',
+  web:'', dir:'León Jude 1305 Bis\nCiudad de Rodríguez, San José de Mayo\nCP 80400 · Uruguay',
+  ig:'https://www.instagram.com/emigut327/',
+  li:'', tw:'', gh:'https://github.com/luchoplay',
+  foto:'https://luchoplay.github.io/mi-tarjeta/foto.jpg'
+};
+
+// Cargar datos guardados localmente si existen
+try{const s=localStorage.getItem('ldgm_data');if(s)D=JSON.parse(s);}catch(e){}
+
+// ── TOAST ──
 function showToast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2200);
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
 
+// ── NAVEGACIÓN ──
+function mostrar(id){
+  ['screenCard','screenPin','screenEditor'].forEach(s=>{
+    const el=document.getElementById(s);
+    el.classList.toggle('active',s===id);
+  });
+}
+function irTarjeta(){renderTarjeta();mostrar('screenCard');}
+function irPin(){pinClear();mostrar('screenPin');}
+
+// ── PIN ──
+let pinVal='';
+function pinPress(d){
+  if(pinVal.length>=6)return;
+  pinVal+=d;
+  actualizarDots();
+  if(pinVal.length===6)verificarPin();
+}
+function pinDel(){pinVal=pinVal.slice(0,-1);actualizarDots();document.getElementById('pinError').textContent='';}
+function pinClear(){pinVal='';actualizarDots();document.getElementById('pinError').textContent='';}
+function actualizarDots(){
+  for(let i=0;i<6;i++){
+    document.getElementById('pd'+i).classList.toggle('filled',i<pinVal.length);
+  }
+}
+function verificarPin(){
+  if(pinVal===PIN){
+    rellenarEditor();
+    mostrar('screenEditor');
+  } else {
+    document.getElementById('pinError').textContent='PIN incorrecto';
+    setTimeout(()=>{pinClear();},700);
+  }
+}
+
+// ── RENDER TARJETA ──
+function renderTarjeta(){
+  const img=document.getElementById('heroImg');
+  const ini=document.getElementById('heroInitials');
+  const iniciales=((D.nombre||'')[0]+(D.apellido||'')[0]).toUpperCase();
+  ini.textContent=iniciales;
+  if(D.foto){img.src=D.foto;img.style.display='block';ini.style.display='none';}
+  else{img.style.display='none';ini.style.display='flex';}
+
+  // nombre
+  const apellidoParts = D.apellido ? D.apellido.split(' ') : [];
+  document.getElementById('heroName').innerHTML = D.nombre+'<br><em>'+D.apellido+'</em>';
+  document.getElementById('heroRole').textContent=D.cargo||'';
+  document.getElementById('heroCompany').textContent=D.empresa||'';
+
+  // contacto
+  const rc=document.getElementById('rowsContacto');
+  rc.innerHTML='';
+  if(D.tel){
+    rc.innerHTML+=rowHTML('tel:'+D.tel.replace(/\s/g,''),'Teléfono',D.tel,iconPhone());
+    rc.innerHTML+=rowHTML('https://wa.me/'+D.tel.replace(/[\s+]/g,''),'WhatsApp',D.tel,iconWa(),'_blank');
+  }
+  if(D.email) rc.innerHTML+=rowHTML('mailto:'+D.email,'Email',D.email,iconMail());
+
+  // dirección
+  const sd=document.getElementById('secDir');
+  const rd=document.getElementById('rowsDir');
+  if(D.dir){
+    rd.innerHTML='<a class="row" href="https://maps.google.com/?q='+encodeURIComponent(D.dir)+'" target="_blank">'+
+      '<div class="row-icon">'+iconPin()+'</div>'+
+      '<div class="row-body"><div class="row-lbl">Dirección</div><div class="row-val multiline">'+D.dir.replace(/\n/g,'<br>')+'</div></div>'+
+      '<div class="row-arrow">›</div></a>';
+    sd.style.display='';
+  } else sd.style.display='none';
+
+  // web
+  const sw=document.getElementById('secWeb');
+  const rw=document.getElementById('rowsWeb');
+  if(D.web){
+    rw.innerHTML=rowHTML(D.web,'Sitio web',D.web.replace(/^https?:\/\//,''),iconGlobe(),'_blank');
+    sw.style.display='';
+  } else sw.style.display='none';
+
+  // redes
+  const redes=[
+    {url:D.ig,label:'Instagram',icon:iconIg()},
+    {url:D.li,label:'LinkedIn',icon:iconLi()},
+    {url:D.tw,label:'Twitter / X',icon:iconTw()},
+    {url:D.gh,label:'GitHub',icon:iconGh()},
+  ].filter(r=>r.url);
+  const sg=document.getElementById('socialGrid');
+  const ss=document.getElementById('secSocial');
+  if(redes.length){
+    sg.innerHTML=redes.map(r=>'<a class="social-btn" href="'+r.url+'" target="_blank">'+r.icon+r.label+'</a>').join('');
+    ss.style.display='';
+  } else ss.style.display='none';
+}
+
+function rowHTML(href,lbl,val,icon,target=''){
+  return '<a class="row" href="'+href+'"'+(target?' target="'+target+'"':'')+'>'+
+    '<div class="row-icon">'+icon+'</div>'+
+    '<div class="row-body"><div class="row-lbl">'+lbl+'</div><div class="row-val">'+val+'</div></div>'+
+    '<div class="row-arrow">›</div></a>';
+}
+
+// ── EDITOR ──
+function rellenarEditor(){
+  document.getElementById('eFoto').value=D.foto||'';
+  document.getElementById('eNombre').value=D.nombre||'';
+  document.getElementById('eApellido').value=D.apellido||'';
+  document.getElementById('eCargo').value=D.cargo||'';
+  document.getElementById('eEmpresa').value=D.empresa||'';
+  document.getElementById('eTel').value=D.tel||'';
+  document.getElementById('eEmail').value=D.email||'';
+  document.getElementById('eWeb').value=D.web||'';
+  document.getElementById('eDir').value=D.dir||'';
+  document.getElementById('eIg').value=D.ig||'';
+  document.getElementById('eLi').value=D.li||'';
+  document.getElementById('eTw').value=D.tw||'';
+  document.getElementById('eGh').value=D.gh||'';
+  prevFoto();
+}
+
+function prevFoto(){
+  const url=document.getElementById('eFoto').value.trim();
+  const n=document.getElementById('eNombre').value.trim();
+  const a=document.getElementById('eApellido').value.trim();
+  const ini=((n[0]||'')+(a[0]||'')).toUpperCase()||'LG';
+  const prev=document.getElementById('prevAvatar');
+  if(url){prev.innerHTML='<img src="'+url+'" onerror="this.parentElement.textContent=\''+ini+'\'">';}
+  else{prev.textContent=ini;}
+}
+
+// ── GUARDAR EN GITHUB ──
+async function guardarEnGitHub(){
+  const btn=document.getElementById('btnSave');
+  btn.disabled=true;
+
+  // Leer campos
+  D={
+    nombre:document.getElementById('eNombre').value.trim(),
+    apellido:document.getElementById('eApellido').value.trim(),
+    cargo:document.getElementById('eCargo').value.trim(),
+    empresa:document.getElementById('eEmpresa').value.trim(),
+    tel:document.getElementById('eTel').value.trim(),
+    email:document.getElementById('eEmail').value.trim(),
+    web:document.getElementById('eWeb').value.trim(),
+    dir:document.getElementById('eDir').value.trim(),
+    ig:document.getElementById('eIg').value.trim(),
+    li:document.getElementById('eLi').value.trim(),
+    tw:document.getElementById('eTw').value.trim(),
+    gh:document.getElementById('eGh').value.trim(),
+    foto:document.getElementById('eFoto').value.trim(),
+  };
+
+  // Guardar localmente
+  try{localStorage.setItem('ldgm_data',JSON.stringify(D));}catch(e){}
+
+  // Mostrar overlay
+  document.getElementById('savingOverlay').classList.add('show');
+
+  try{
+    // Obtener SHA del archivo actual
+    const metaRes=await fetch('https://api.github.com/repos/'+GH_USER+'/'+GH_REPO+'/contents/'+GH_FILE,{
+      headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json'}
+    });
+    const meta=await metaRes.json();
+    const sha=meta.sha;
+
+    // Generar nuevo HTML con los datos actualizados
+    const nuevoHTML=generarHTML();
+    const encoded=btoa(unescape(encodeURIComponent(nuevoHTML)));
+
+    // Subir a GitHub
+    const res=await fetch('https://api.github.com/repos/'+GH_USER+'/'+GH_REPO+'/contents/'+GH_FILE,{
+      method:'PUT',
+      headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
+      body:JSON.stringify({message:'Actualizar tarjeta',content:encoded,sha})
+    });
+
+    if(res.ok){
+      document.getElementById('savingOverlay').classList.remove('show');
+      irTarjeta();
+      showToast('¡Tarjeta actualizada! ✓');
+    } else {
+      throw new Error('Error al guardar');
+    }
+  } catch(e){
+    document.getElementById('savingOverlay').classList.remove('show');
+    showToast('Error al conectar con GitHub');
+    console.error(e);
+  }
+  btn.disabled=false;
+}
+
+// ── GENERAR HTML ACTUALIZADO ──
+function generarHTML(){
+  const nombreCompleto=D.nombre+' '+D.apellido;
+  const iniciales=((D.nombre||'')[0]+(D.apellido||'')[0]).toUpperCase();
+
+  const rowsContacto=[
+    D.tel?`<a class="row" href="tel:${D.tel.replace(/\s/g,'')}">
+      <div class="row-icon">${iconPhone()}</div>
+      <div class="row-body"><div class="row-lbl">Teléfono</div><div class="row-val">${D.tel}</div></div>
+      <div class="row-arrow">›</div></a>`:'',
+    D.tel?`<a class="row" href="https://wa.me/${D.tel.replace(/[\s+]/g,'')}" target="_blank">
+      <div class="row-icon">${iconWa()}</div>
+      <div class="row-body"><div class="row-lbl">WhatsApp</div><div class="row-val">${D.tel}</div></div>
+      <div class="row-arrow">›</div></a>`:'',
+    D.email?`<a class="row" href="mailto:${D.email}">
+      <div class="row-icon">${iconMail()}</div>
+      <div class="row-body"><div class="row-lbl">Email</div><div class="row-val">${D.email}</div></div>
+      <div class="row-arrow">›</div></a>`:''
+  ].filter(Boolean).join('\n');
+
+  const secDir=D.dir?`<div class="section"><div class="section-label">Ubicación</div><div class="rows">
+    <a class="row" href="https://maps.google.com/?q=${encodeURIComponent(D.dir)}" target="_blank">
+      <div class="row-icon">${iconPin()}</div>
+      <div class="row-body"><div class="row-lbl">Dirección</div><div class="row-val multiline">${D.dir.replace(/\n/g,'<br>')}</div></div>
+      <div class="row-arrow">›</div></a></div></div>`:'';
+
+  const secWeb=D.web?`<div class="section"><div class="section-label">Sitio web</div><div class="rows">
+    <a class="row" href="${D.web}" target="_blank">
+      <div class="row-icon">${iconGlobe()}</div>
+      <div class="row-body"><div class="row-lbl">Web</div><div class="row-val">${D.web.replace(/^https?:\/\//,'')}</div></div>
+      <div class="row-arrow">›</div></a></div></div>`:'';
+
+  const redes=[
+    D.ig?`<a class="social-btn" href="${D.ig}" target="_blank">${iconIg()}Instagram</a>`:'',
+    D.li?`<a class="social-btn" href="${D.li}" target="_blank">${iconLi()}LinkedIn</a>`:'',
+    D.tw?`<a class="social-btn" href="${D.tw}" target="_blank">${iconTw()}Twitter / X</a>`:'',
+    D.gh?`<a class="social-btn" href="${D.gh}" target="_blank">${iconGh()}GitHub</a>`:'',
+  ].filter(Boolean);
+  const secSocial=redes.length?`<div class="section"><div class="section-label">Redes sociales</div><div class="social-grid">${redes.join('')}</div></div>`:'';
+
+  // Retornar el HTML completo con los nuevos datos
+  return document.documentElement.outerHTML
+    .replace(/GH_TOKEN = atob\('[^']+'\)/,`GH_TOKEN = atob('${btoa(GH_TOKEN)}')`)
+    .replace(/let D = \{[\s\S]*?\};/,`let D = ${JSON.stringify(D)};`);
+}
+
+// ── VCF ──
 function downloadVCF(){
-  const vcf=[
-    'BEGIN:VCARD','VERSION:3.0',
-    'FN:Luis Damián Gutiérrez Manera',
-    'N:Gutiérrez Manera;Luis Damián;;;',
-    'TITLE:Asesor de Inversión en Activos Históricos',
-    'ORG:Emigut 327 Corp',
-    'TEL;TYPE=CELL:+59891682711',
-    'EMAIL:caratulas123@gmail.com',
-    'ADR;TYPE=WORK:;;León Jude 1305 Bis;Ciudad de Rodríguez;San José de Mayo;80400;Uruguay',
-    'X-SOCIALPROFILE;type=instagram:https://www.instagram.com/emigut327/',
-    'X-SOCIALPROFILE;type=github:https://github.com/luchoplay',
-    'PHOTO;VALUE=URI:https://luchoplay.github.io/mi-tarjeta/foto.jpg',
-    'END:VCARD'
-  ].join('\r\n');
+  const nombre=D.nombre+' '+D.apellido;
+  const vcf=['BEGIN:VCARD','VERSION:3.0',
+    'FN:'+nombre,'N:'+D.apellido+';'+D.nombre+';;;',
+    D.cargo?'TITLE:'+D.cargo:'',
+    D.empresa?'ORG:'+D.empresa:'',
+    D.tel?'TEL;TYPE=CELL:'+D.tel.replace(/\s/g,''):'',
+    D.email?'EMAIL:'+D.email:'',
+    D.web?'URL:'+D.web:'',
+    D.dir?'ADR;TYPE=WORK:;;'+D.dir.replace(/\n/g,';')+';;;':'',
+    D.ig?'X-SOCIALPROFILE;type=instagram:'+D.ig:'',
+    D.foto?'PHOTO;VALUE=URI:'+D.foto:'',
+    'END:VCARD'].filter(Boolean).join('\r\n');
   const blob=new Blob([vcf],{type:'text/vcard'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
-  a.href=url;a.download='Luis_Gutierrez_Manera.vcf';
+  a.href=url;a.download=nombre.replace(/\s/g,'_')+'.vcf';
   a.click();URL.revokeObjectURL(url);
   showToast('Contacto listo para guardar ✓');
 }
 
+// ── COMPARTIR ──
 async function shareCard(){
-  const texto=`👤 Luis Damián Gutiérrez Manera\n💼 Asesor de Inversión en Activos Históricos · Emigut 327 Corp\n📞 +598 91 682 711\n📧 caratulas123@gmail.com\n📍 León Jude 1305 Bis, San José de Mayo, Uruguay\n\n🔗 https://luchoplay.github.io/mi-tarjeta/`;
-  if(navigator.share){
-    try{await navigator.share({title:'Luis Damián Gutiérrez Manera',text:texto});return;}
-    catch(e){if(e.name==='AbortError')return;}
-  }
-  navigator.clipboard.writeText(texto).then(()=>showToast('Copiado al portapapeles ✓')).catch(()=>showToast('Usá el botón de compartir'));
+  const nombre=D.nombre+' '+D.apellido;
+  const lineas=['👤 '+nombre,
+    (D.cargo||D.empresa)?'💼 '+(D.cargo&&D.empresa?D.cargo+' · '+D.empresa:D.cargo||D.empresa):'',
+    D.tel?'📞 '+D.tel:'',D.email?'📧 '+D.email:'',
+    D.web?'🌐 '+D.web.replace(/^https?:\/\//,''):'',
+    '\n🔗 https://luchoplay.github.io/mi-tarjeta/'
+  ].filter(Boolean).join('\n');
+  if(navigator.share){try{await navigator.share({title:nombre,text:lineas});return;}catch(e){if(e.name==='AbortError')return;}}
+  navigator.clipboard.writeText(lineas).then(()=>showToast('Copiado ✓')).catch(()=>showToast('Compartí manualmente'));
 }
 
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
+// ── ICONOS ──
+function iconPhone(){return '<svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 6.18 2 2 0 015.05 4h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L9.09 11.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>';}
+function iconWa(){return '<svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>';}
+function iconMail(){return '<svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>';}
+function iconPin(){return '<svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>';}
+function iconGlobe(){return '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>';}
+function iconIg(){return '<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>';}
+function iconLi(){return '<svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>';}
+function iconTw(){return '<svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>';}
+function iconGh(){return '<svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>';}
+
+// ── INIT ──
+renderTarjeta();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>
 </html>
