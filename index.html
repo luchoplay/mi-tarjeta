@@ -24,9 +24,14 @@
 html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(201,169,110,0.07) 0%,transparent 60%);pointer-events:none;z-index:0;}
 
-/* ── SCREENS ── */
 .screen{display:none;flex-direction:column;min-height:100vh;position:relative;z-index:1;}
 .screen.active{display:flex;}
+
+/* ── LOADING ── */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:1rem;}
+.loading-spinner{width:36px;height:36px;border:2px solid var(--border2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;}
+.loading-text{font-size:.8rem;color:var(--muted);letter-spacing:.1em;}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* ── TARJETA ── */
 .wrap{max-width:480px;margin:0 auto;padding-bottom:7rem;width:100%;}
@@ -47,7 +52,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .section-label{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted2);margin-bottom:.75rem;display:flex;align-items:center;gap:.75rem;}
 .section-label::after{content:'';flex:1;height:0.5px;background:var(--border2);}
 .rows{display:flex;flex-direction:column;gap:.5rem;}
-.row{display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;background:var(--surface);border:0.5px solid var(--border);border-radius:14px;text-decoration:none;color:var(--text);transition:background .2s,transform .15s;cursor:pointer;position:relative;overflow:hidden;}
+.row{display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;background:var(--surface);border:0.5px solid var(--border);border-radius:14px;text-decoration:none;color:var(--text);transition:background .2s,transform .15s;cursor:pointer;}
 .row:active{background:var(--surface2);transform:scale(.99);}
 .row-icon{width:40px;height:40px;border-radius:11px;background:var(--surface2);border:0.5px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .row-icon svg{width:17px;height:17px;stroke:var(--gold);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;}
@@ -68,11 +73,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn-secondary:active{background:var(--surface2);}
 .btn-secondary svg{width:15px;height:15px;stroke:var(--muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
 
-/* ── BOTON EDITOR ── */
-.secret-btn{position:fixed;top:1rem;right:1rem;width:36px;height:36px;z-index:100;cursor:pointer;background:var(--surface);border:0.5px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0.4;transition:opacity 0.2s;}
-.secret-btn:hover,.secret-btn:active{opacity:1;}
+/* ── ENGRANAJE ── */
+.edit-btn{position:fixed;top:1rem;right:1rem;width:36px;height:36px;z-index:100;cursor:pointer;background:var(--surface);border:0.5px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0.35;transition:opacity 0.2s;}
+.edit-btn:hover,.edit-btn:active{opacity:1;}
+.edit-btn svg{width:15px;height:15px;stroke:var(--muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
 
-/* ── PIN SCREEN ── */
+/* ── PIN ── */
 .pin-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;gap:1.5rem;}
 .pin-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--gold);text-align:center;}
 .pin-sub{font-size:.8rem;color:var(--muted);letter-spacing:.1em;}
@@ -88,7 +94,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn-back-pin{display:flex;align-items:center;gap:.4rem;background:none;border:none;color:var(--muted);font-family:'Jost',sans-serif;font-size:.85rem;cursor:pointer;padding:.5rem 1rem;border-radius:8px;margin-top:.5rem;}
 .btn-back-pin svg{width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
 
-/* ── EDITOR SCREEN ── */
+/* ── EDITOR ── */
 .editor-header{background:var(--surface);border-bottom:0.5px solid var(--border);padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
 .editor-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gold);}
 .btn-back-ed{display:flex;align-items:center;gap:.4rem;background:none;border:none;color:var(--muted);font-family:'Jost',sans-serif;font-size:.85rem;cursor:pointer;padding:.4rem .7rem;border-radius:8px;}
@@ -105,10 +111,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .foto-row{display:flex;align-items:center;gap:1rem;}
 .avatar-preview{width:52px;height:52px;border-radius:50%;background:var(--surface2);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);overflow:hidden;flex-shrink:0;}
 .avatar-preview img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
-.saving-overlay{position:fixed;inset:0;background:rgba(8,8,16,0.85);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;z-index:300;display:none;}
+
+/* ── SAVING ── */
+.saving-overlay{position:fixed;inset:0;background:rgba(8,8,16,0.85);display:none;flex-direction:column;align-items:center;justify-content:center;gap:1rem;z-index:300;}
 .saving-overlay.show{display:flex;}
 .saving-spinner{width:40px;height:40px;border:2px solid var(--border2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg)}}
 .saving-text{font-size:.85rem;color:var(--muted);letter-spacing:.1em;}
 
 /* ── TOAST ── */
@@ -117,17 +124,23 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 .fade-up{opacity:0;animation:fadeUp 0.5s ease forwards;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.d1{animation-delay:.05s}.d2{animation-delay:.12s}.d3{animation-delay:.19s}
-.d4{animation-delay:.26s}.d5{animation-delay:.33s}
+.d1{animation-delay:.05s}.d2{animation-delay:.12s}.d3{animation-delay:.19s}.d4{animation-delay:.26s}.d5{animation-delay:.33s}
 </style>
 </head>
 <body>
 
+<!-- ══ LOADING ══ -->
+<div id="screenLoading" class="screen active">
+  <div class="loading">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Cargando tarjeta...</p>
+  </div>
+</div>
+
 <!-- ══ TARJETA ══ -->
-<div id="screenCard" class="screen active">
-  <!-- Botón editor esquina superior derecha -->
-  <div class="secret-btn" onclick="irPin()">
-    <svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:var(--muted);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+<div id="screenCard" class="screen">
+  <div class="edit-btn" onclick="irPin()">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
   </div>
 
   <div class="wrap">
@@ -135,16 +148,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div class="avatar-shell">
         <div class="avatar-ring-outer"></div>
         <div class="avatar-ring-inner"></div>
-        <img id="heroImg" class="avatar-img"
-          src="https://luchoplay.github.io/mi-tarjeta/foto.jpg"
-          alt="Luis Damián Gutiérrez Manera"
+        <img id="heroImg" class="avatar-img" src="" alt=""
           onerror="this.style.display='none';document.getElementById('heroInitials').style.display='flex';">
-        <div class="avatar-initials" id="heroInitials">LG</div>
+        <div class="avatar-initials" id="heroInitials"></div>
         <div class="avatar-dot"></div>
       </div>
-      <h1 class="hero-name" id="heroName">Luis Damián<br><em>Gutiérrez Manera</em></h1>
-      <p class="hero-role" id="heroRole">Asesor de Inversión en Activos Históricos</p>
-      <p class="hero-company" id="heroCompany">Emigut 327 Corp</p>
+      <h1 class="hero-name" id="heroName"></h1>
+      <p class="hero-role" id="heroRole"></p>
+      <p class="hero-company" id="heroCompany"></p>
     </div>
 
     <div class="section fade-up d2">
@@ -187,13 +198,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="pin-screen">
     <p class="pin-title">Acceso editor</p>
     <p class="pin-sub">Ingresá tu PIN</p>
-    <div class="pin-dots" id="pinDots">
-      <div class="pin-dot" id="pd0"></div>
-      <div class="pin-dot" id="pd1"></div>
-      <div class="pin-dot" id="pd2"></div>
-      <div class="pin-dot" id="pd3"></div>
-      <div class="pin-dot" id="pd4"></div>
-      <div class="pin-dot" id="pd5"></div>
+    <div class="pin-dots">
+      <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
+      <div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div>
+      <div class="pin-dot" id="pd4"></div><div class="pin-dot" id="pd5"></div>
     </div>
     <p class="pin-error" id="pinError"></p>
     <div class="pin-pad">
@@ -225,18 +233,17 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       Volver
     </button>
     <span class="editor-title">Editar tarjeta</span>
-    <button class="btn-save-ed" id="btnSave" onclick="guardarEnGitHub()">Guardar</button>
+    <button class="btn-save-ed" id="btnSave" onclick="guardarDatos()">Guardar</button>
   </div>
 
   <div class="editor-body">
     <div class="field-group">
       <label>Foto (URL de imagen)</label>
       <div class="foto-row">
-        <div class="avatar-preview" id="prevAvatar">LG</div>
+        <div class="avatar-preview" id="prevAvatar"></div>
         <input type="url" id="eFoto" placeholder="https://..." oninput="prevFoto()">
       </div>
     </div>
-
     <div class="field-row">
       <div class="field-group"><label>Nombre</label><input type="text" id="eNombre"></div>
       <div class="field-group"><label>Apellido</label><input type="text" id="eApellido"></div>
@@ -256,7 +263,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="field-group"><label>Instagram</label><input type="url" id="eIg" placeholder="https://instagram.com/usuario"></div>
     <div class="field-group"><label>LinkedIn</label><input type="url" id="eLi" placeholder="https://linkedin.com/in/usuario"></div>
     <div class="field-group"><label>Twitter / X</label><input type="url" id="eTw" placeholder="https://twitter.com/usuario"></div>
+    <div class="field-group"><label>YouTube</label><input type="url" id="eYt" placeholder="https://youtube.com/@canal"></div>
+    <div class="field-group"><label>TikTok</label><input type="url" id="eTt" placeholder="https://tiktok.com/@usuario"></div>
     <div class="field-group"><label>GitHub</label><input type="url" id="eGh" placeholder="https://github.com/usuario"></div>
+
+    <p class="section-sep">Mensajería</p>
+    <div class="field-group"><label>Signal (número)</label><input type="tel" id="eSignal" placeholder="+598 91 000 000"></div>
+    <div class="field-group"><label>Zangi (usuario o número)</label><input type="text" id="eZangi" placeholder="usuario o +598..."></div>
   </div>
 </div>
 
@@ -270,28 +283,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIGURACIÓN GITHUB ──
 const GH_USER  = 'luchoplay';
 const GH_REPO  = 'mi-tarjeta';
-const GH_FILE  = 'index.html';
 const GH_TOKEN = atob('Z2hwX0Q5b3RPYlVGd01ZTkhJYUg0S2xRRXpjTFV4R1YwM3ROWGkw');
 const PIN      = '251179';
 
-// ── DATOS INICIALES ──
-let D = {
-  nombre:'Luis Damián', apellido:'Gutiérrez Manera',
-  cargo:'Asesor de Inversión en Activos Históricos',
-  empresa:'Emigut 327 Corp',
-  tel:'+598 91 682 711',
-  email:'caratulas123@gmail.com',
-  web:'', dir:'León Jude 1305 Bis\nCiudad de Rodríguez, San José de Mayo\nCP 80400 · Uruguay',
-  ig:'https://www.instagram.com/emigut327/',
-  li:'', tw:'', gh:'https://github.com/luchoplay',
-  foto:'https://luchoplay.github.io/mi-tarjeta/foto.jpg'
-};
-
-// Cargar datos guardados localmente si existen
-try{const s=localStorage.getItem('ldgm_data');if(s)D=JSON.parse(s);}catch(e){}
+let D = {};
 
 // ── TOAST ──
 function showToast(msg){
@@ -302,7 +299,7 @@ function showToast(msg){
 
 // ── NAVEGACIÓN ──
 function mostrar(id){
-  ['screenCard','screenPin','screenEditor'].forEach(s=>{
+  ['screenLoading','screenCard','screenPin','screenEditor'].forEach(s=>{
     const el=document.getElementById(s);
     el.classList.toggle('active',s===id);
   });
@@ -310,81 +307,74 @@ function mostrar(id){
 function irTarjeta(){renderTarjeta();mostrar('screenCard');}
 function irPin(){pinClear();mostrar('screenPin');}
 
-// ── PIN ──
-let pinVal='';
-function pinPress(d){
-  if(pinVal.length>=6)return;
-  pinVal+=d;
-  actualizarDots();
-  if(pinVal.length===6)verificarPin();
-}
-function pinDel(){pinVal=pinVal.slice(0,-1);actualizarDots();document.getElementById('pinError').textContent='';}
-function pinClear(){pinVal='';actualizarDots();document.getElementById('pinError').textContent='';}
-function actualizarDots(){
-  for(let i=0;i<6;i++){
-    document.getElementById('pd'+i).classList.toggle('filled',i<pinVal.length);
+// ── CARGAR DATOS DESDE GITHUB ──
+async function cargarDatos(){
+  try{
+    const res = await fetch('https://luchoplay.github.io/mi-tarjeta/datos.json?t='+Date.now());
+    D = await res.json();
+  } catch(e){
+    D = {};
   }
-}
-function verificarPin(){
-  if(pinVal===PIN){
-    rellenarEditor();
-    mostrar('screenEditor');
-  } else {
-    document.getElementById('pinError').textContent='PIN incorrecto';
-    setTimeout(()=>{pinClear();},700);
-  }
+  irTarjeta();
 }
 
 // ── RENDER TARJETA ──
 function renderTarjeta(){
-  const img=document.getElementById('heroImg');
-  const ini=document.getElementById('heroInitials');
-  const iniciales=((D.nombre||'')[0]+(D.apellido||'')[0]).toUpperCase();
-  ini.textContent=iniciales;
-  if(D.foto){img.src=D.foto;img.style.display='block';ini.style.display='none';}
-  else{img.style.display='none';ini.style.display='flex';}
+  const iniciales = ((D.nombre||'')[0]+(D.apellido||'')[0]).toUpperCase()||'LG';
+  const img = document.getElementById('heroImg');
+  const ini = document.getElementById('heroInitials');
+  ini.textContent = iniciales;
+  if(D.foto){
+    img.src = D.foto+'?t='+Date.now();
+    img.style.display='block';
+    ini.style.display='none';
+  } else {
+    img.style.display='none';
+    ini.style.display='flex';
+  }
 
-  // nombre
-  const apellidoParts = D.apellido ? D.apellido.split(' ') : [];
-  document.getElementById('heroName').innerHTML = D.nombre+'<br><em>'+D.apellido+'</em>';
-  document.getElementById('heroRole').textContent=D.cargo||'';
-  document.getElementById('heroCompany').textContent=D.empresa||'';
+  document.getElementById('heroName').innerHTML = (D.nombre||'')+'<br><em>'+(D.apellido||'')+'</em>';
+  document.getElementById('heroRole').textContent = D.cargo||'';
+  document.getElementById('heroCompany').textContent = D.empresa||'';
 
-  // contacto
+  // Contacto
   const rc=document.getElementById('rowsContacto');
   rc.innerHTML='';
   if(D.tel){
-    rc.innerHTML+=rowHTML('tel:'+D.tel.replace(/\s/g,''),'Teléfono',D.tel,iconPhone());
-    rc.innerHTML+=rowHTML('https://wa.me/'+D.tel.replace(/[\s+]/g,''),'WhatsApp',D.tel,iconWa(),'_blank');
+    rc.innerHTML+=rowHTML('tel:'+D.tel.replace(/\s/g,''),'Teléfono',D.tel,iPhone());
+    rc.innerHTML+=rowHTML('https://wa.me/'+D.tel.replace(/[\s+]/g,''),'WhatsApp',D.tel,iWa(),'_blank');
   }
-  if(D.email) rc.innerHTML+=rowHTML('mailto:'+D.email,'Email',D.email,iconMail());
+  if(D.email) rc.innerHTML+=rowHTML('mailto:'+D.email,'Email',D.email,iMail());
+  if(D.signal) rc.innerHTML+=rowHTML('https://signal.me/#p/'+D.signal.replace(/[\s+]/g,''),'Signal',D.signal,iSignal(),'_blank');
+  if(D.zangi) rc.innerHTML+=rowHTML('#','Zangi',D.zangi,iZangi());
 
-  // dirección
+  // Dirección
   const sd=document.getElementById('secDir');
-  const rd=document.getElementById('rowsDir');
   if(D.dir){
-    rd.innerHTML='<a class="row" href="https://maps.google.com/?q='+encodeURIComponent(D.dir)+'" target="_blank">'+
-      '<div class="row-icon">'+iconPin()+'</div>'+
+    document.getElementById('rowsDir').innerHTML=
+      '<a class="row" href="https://maps.google.com/?q='+encodeURIComponent(D.dir)+'" target="_blank">'+
+      '<div class="row-icon">'+iPin()+'</div>'+
       '<div class="row-body"><div class="row-lbl">Dirección</div><div class="row-val multiline">'+D.dir.replace(/\n/g,'<br>')+'</div></div>'+
       '<div class="row-arrow">›</div></a>';
     sd.style.display='';
   } else sd.style.display='none';
 
-  // web
+  // Web
   const sw=document.getElementById('secWeb');
-  const rw=document.getElementById('rowsWeb');
   if(D.web){
-    rw.innerHTML=rowHTML(D.web,'Sitio web',D.web.replace(/^https?:\/\//,''),iconGlobe(),'_blank');
+    document.getElementById('rowsWeb').innerHTML=rowHTML(D.web,'Sitio web',D.web.replace(/^https?:\/\//,''),iGlobe(),'_blank');
     sw.style.display='';
   } else sw.style.display='none';
 
-  // redes
+  // Redes
   const redes=[
-    {url:D.ig,label:'Instagram',icon:iconIg()},
-    {url:D.li,label:'LinkedIn',icon:iconLi()},
-    {url:D.tw,label:'Twitter / X',icon:iconTw()},
-    {url:D.gh,label:'GitHub',icon:iconGh()},
-  ].filter(r=>r.url);
+    D.ig&&{url:D.ig,label:'Instagram',icon:iIg()},
+    D.li&&{url:D.li,label:'LinkedIn',icon:iLi()},
+    D.tw&&{url:D.tw,label:'Twitter / X',icon:iTw()},
+    D.yt&&{url:D.yt,label:'YouTube',icon:iYt()},
+    D.tt&&{url:D.tt,label:'TikTok',icon:iTt()},
+    D.gh&&{url:D.gh,label:'GitHub',icon:iGh()},
+  ].filter(Boolean);
   const sg=document.getElementById('socialGrid');
   const ss=document.getElementById('secSocial');
   if(redes.length){
@@ -398,6 +388,22 @@ function rowHTML(href,lbl,val,icon,target=''){
     '<div class="row-icon">'+icon+'</div>'+
     '<div class="row-body"><div class="row-lbl">'+lbl+'</div><div class="row-val">'+val+'</div></div>'+
     '<div class="row-arrow">›</div></a>';
+}
+
+// ── PIN ──
+let pinVal='';
+function pinPress(d){
+  if(pinVal.length>=6)return;
+  pinVal+=d;
+  actualizarDots();
+  if(pinVal.length===6)verificarPin();
+}
+function pinDel(){pinVal=pinVal.slice(0,-1);actualizarDots();document.getElementById('pinError').textContent='';}
+function pinClear(){pinVal='';actualizarDots();document.getElementById('pinError').textContent='';}
+function actualizarDots(){for(let i=0;i<6;i++)document.getElementById('pd'+i).classList.toggle('filled',i<pinVal.length);}
+function verificarPin(){
+  if(pinVal===PIN){rellenarEditor();mostrar('screenEditor');}
+  else{document.getElementById('pinError').textContent='PIN incorrecto';setTimeout(()=>pinClear(),700);}
 }
 
 // ── EDITOR ──
@@ -414,7 +420,11 @@ function rellenarEditor(){
   document.getElementById('eIg').value=D.ig||'';
   document.getElementById('eLi').value=D.li||'';
   document.getElementById('eTw').value=D.tw||'';
+  document.getElementById('eYt').value=D.yt||'';
+  document.getElementById('eTt').value=D.tt||'';
   document.getElementById('eGh').value=D.gh||'';
+  document.getElementById('eSignal').value=D.signal||'';
+  document.getElementById('eZangi').value=D.zangi||'';
   prevFoto();
 }
 
@@ -428,12 +438,12 @@ function prevFoto(){
   else{prev.textContent=ini;}
 }
 
-// ── GUARDAR EN GITHUB ──
-async function guardarEnGitHub(){
+// ── GUARDAR EN GITHUB (solo datos.json) ──
+async function guardarDatos(){
   const btn=document.getElementById('btnSave');
   btn.disabled=true;
+  document.getElementById('savingOverlay').classList.add('show');
 
-  // Leer campos
   D={
     nombre:document.getElementById('eNombre').value.trim(),
     apellido:document.getElementById('eApellido').value.trim(),
@@ -446,101 +456,53 @@ async function guardarEnGitHub(){
     ig:document.getElementById('eIg').value.trim(),
     li:document.getElementById('eLi').value.trim(),
     tw:document.getElementById('eTw').value.trim(),
+    yt:document.getElementById('eYt').value.trim(),
+    tt:document.getElementById('eTt').value.trim(),
     gh:document.getElementById('eGh').value.trim(),
+    signal:document.getElementById('eSignal').value.trim(),
+    zangi:document.getElementById('eZangi').value.trim(),
     foto:document.getElementById('eFoto').value.trim(),
   };
 
-  // Guardar localmente
-  try{localStorage.setItem('ldgm_data',JSON.stringify(D));}catch(e){}
-
-  // Mostrar overlay
-  document.getElementById('savingOverlay').classList.add('show');
-
   try{
-    // Obtener SHA del archivo actual
-    const metaRes=await fetch('https://api.github.com/repos/'+GH_USER+'/'+GH_REPO+'/contents/'+GH_FILE,{
+    // Obtener SHA del datos.json
+    const metaRes=await fetch('https://api.github.com/repos/'+GH_USER+'/'+GH_REPO+'/contents/datos.json',{
       headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json'}
     });
     const meta=await metaRes.json();
     const sha=meta.sha;
 
-    // Generar nuevo HTML con los datos actualizados
-    const nuevoHTML=generarHTML();
-    const encoded=btoa(unescape(encodeURIComponent(nuevoHTML)));
+    // Subir datos.json actualizado
+    const contenido=JSON.stringify(D,null,2);
+    const encoded=btoa(unescape(encodeURIComponent(contenido)));
 
-    // Subir a GitHub
-    const res=await fetch('https://api.github.com/repos/'+GH_USER+'/'+GH_REPO+'/contents/'+GH_FILE,{
+    const res=await fetch('https://api.github.com/repos/'+GH_USER+'/'+GH_REPO+'/contents/datos.json',{
       method:'PUT',
       headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
-      body:JSON.stringify({message:'Actualizar tarjeta',content:encoded,sha})
+      body:JSON.stringify({message:'Actualizar datos tarjeta',content:encoded,sha})
     });
 
+    document.getElementById('savingOverlay').classList.remove('show');
     if(res.ok){
-      document.getElementById('savingOverlay').classList.remove('show');
       irTarjeta();
-      showToast('¡Tarjeta actualizada! ✓');
+      showToast('¡Datos actualizados! ✓');
     } else {
-      throw new Error('Error al guardar');
+      showToast('Error al guardar. Intentá de nuevo.');
     }
   } catch(e){
     document.getElementById('savingOverlay').classList.remove('show');
-    showToast('Error al conectar con GitHub');
+    showToast('Error de conexión');
     console.error(e);
   }
   btn.disabled=false;
 }
 
-// ── GENERAR HTML ACTUALIZADO ──
-function generarHTML(){
-  const nombreCompleto=D.nombre+' '+D.apellido;
-  const iniciales=((D.nombre||'')[0]+(D.apellido||'')[0]).toUpperCase();
-
-  const rowsContacto=[
-    D.tel?`<a class="row" href="tel:${D.tel.replace(/\s/g,'')}">
-      <div class="row-icon">${iconPhone()}</div>
-      <div class="row-body"><div class="row-lbl">Teléfono</div><div class="row-val">${D.tel}</div></div>
-      <div class="row-arrow">›</div></a>`:'',
-    D.tel?`<a class="row" href="https://wa.me/${D.tel.replace(/[\s+]/g,'')}" target="_blank">
-      <div class="row-icon">${iconWa()}</div>
-      <div class="row-body"><div class="row-lbl">WhatsApp</div><div class="row-val">${D.tel}</div></div>
-      <div class="row-arrow">›</div></a>`:'',
-    D.email?`<a class="row" href="mailto:${D.email}">
-      <div class="row-icon">${iconMail()}</div>
-      <div class="row-body"><div class="row-lbl">Email</div><div class="row-val">${D.email}</div></div>
-      <div class="row-arrow">›</div></a>`:''
-  ].filter(Boolean).join('\n');
-
-  const secDir=D.dir?`<div class="section"><div class="section-label">Ubicación</div><div class="rows">
-    <a class="row" href="https://maps.google.com/?q=${encodeURIComponent(D.dir)}" target="_blank">
-      <div class="row-icon">${iconPin()}</div>
-      <div class="row-body"><div class="row-lbl">Dirección</div><div class="row-val multiline">${D.dir.replace(/\n/g,'<br>')}</div></div>
-      <div class="row-arrow">›</div></a></div></div>`:'';
-
-  const secWeb=D.web?`<div class="section"><div class="section-label">Sitio web</div><div class="rows">
-    <a class="row" href="${D.web}" target="_blank">
-      <div class="row-icon">${iconGlobe()}</div>
-      <div class="row-body"><div class="row-lbl">Web</div><div class="row-val">${D.web.replace(/^https?:\/\//,'')}</div></div>
-      <div class="row-arrow">›</div></a></div></div>`:'';
-
-  const redes=[
-    D.ig?`<a class="social-btn" href="${D.ig}" target="_blank">${iconIg()}Instagram</a>`:'',
-    D.li?`<a class="social-btn" href="${D.li}" target="_blank">${iconLi()}LinkedIn</a>`:'',
-    D.tw?`<a class="social-btn" href="${D.tw}" target="_blank">${iconTw()}Twitter / X</a>`:'',
-    D.gh?`<a class="social-btn" href="${D.gh}" target="_blank">${iconGh()}GitHub</a>`:'',
-  ].filter(Boolean);
-  const secSocial=redes.length?`<div class="section"><div class="section-label">Redes sociales</div><div class="social-grid">${redes.join('')}</div></div>`:'';
-
-  // Retornar el HTML completo con los nuevos datos
-  return document.documentElement.outerHTML
-    .replace(/GH_TOKEN = atob\('[^']+'\)/,`GH_TOKEN = atob('${btoa(GH_TOKEN)}')`)
-    .replace(/let D = \{[\s\S]*?\};/,`let D = ${JSON.stringify(D)};`);
-}
-
 // ── VCF ──
 function downloadVCF(){
-  const nombre=D.nombre+' '+D.apellido;
+  const nombre=(D.nombre||'')+' '+(D.apellido||'');
   const vcf=['BEGIN:VCARD','VERSION:3.0',
-    'FN:'+nombre,'N:'+D.apellido+';'+D.nombre+';;;',
+    'FN:'+nombre.trim(),
+    'N:'+(D.apellido||'')+';'+(D.nombre||'')+';;;',
     D.cargo?'TITLE:'+D.cargo:'',
     D.empresa?'ORG:'+D.empresa:'',
     D.tel?'TEL;TYPE=CELL:'+D.tel.replace(/\s/g,''):'',
@@ -548,22 +510,25 @@ function downloadVCF(){
     D.web?'URL:'+D.web:'',
     D.dir?'ADR;TYPE=WORK:;;'+D.dir.replace(/\n/g,';')+';;;':'',
     D.ig?'X-SOCIALPROFILE;type=instagram:'+D.ig:'',
+    D.li?'X-SOCIALPROFILE;type=linkedin:'+D.li:'',
     D.foto?'PHOTO;VALUE=URI:'+D.foto:'',
     'END:VCARD'].filter(Boolean).join('\r\n');
   const blob=new Blob([vcf],{type:'text/vcard'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
-  a.href=url;a.download=nombre.replace(/\s/g,'_')+'.vcf';
+  a.href=url;a.download=nombre.trim().replace(/\s/g,'_')+'.vcf';
   a.click();URL.revokeObjectURL(url);
-  showToast('Contacto listo para guardar ✓');
+  showToast('Contacto listo ✓');
 }
 
 // ── COMPARTIR ──
 async function shareCard(){
-  const nombre=D.nombre+' '+D.apellido;
-  const lineas=['👤 '+nombre,
-    (D.cargo||D.empresa)?'💼 '+(D.cargo&&D.empresa?D.cargo+' · '+D.empresa:D.cargo||D.empresa):'',
-    D.tel?'📞 '+D.tel:'',D.email?'📧 '+D.email:'',
+  const nombre=((D.nombre||'')+' '+(D.apellido||'')).trim();
+  const lineas=[
+    '👤 '+nombre,
+    (D.cargo||D.empresa)?'💼 '+[D.cargo,D.empresa].filter(Boolean).join(' · '):'',
+    D.tel?'📞 '+D.tel:'',
+    D.email?'📧 '+D.email:'',
     D.web?'🌐 '+D.web.replace(/^https?:\/\//,''):'',
     '\n🔗 https://luchoplay.github.io/mi-tarjeta/'
   ].filter(Boolean).join('\n');
@@ -572,18 +537,22 @@ async function shareCard(){
 }
 
 // ── ICONOS ──
-function iconPhone(){return '<svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 6.18 2 2 0 015.05 4h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L9.09 11.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>';}
-function iconWa(){return '<svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>';}
-function iconMail(){return '<svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>';}
-function iconPin(){return '<svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>';}
-function iconGlobe(){return '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>';}
-function iconIg(){return '<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>';}
-function iconLi(){return '<svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>';}
-function iconTw(){return '<svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>';}
-function iconGh(){return '<svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>';}
+function iPhone(){return '<svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 6.18 2 2 0 015.05 4h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L9.09 11.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>';}
+function iWa(){return '<svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>';}
+function iMail(){return '<svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>';}
+function iPin(){return '<svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>';}
+function iGlobe(){return '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>';}
+function iIg(){return '<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>';}
+function iLi(){return '<svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>';}
+function iTw(){return '<svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>';}
+function iYt(){return '<svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>';}
+function iTt(){return '<svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/></svg>';}
+function iGh(){return '<svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>';}
+function iSignal(){return '<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M8 12s1-3 4-3 4 3 4 3-1 3-4 3-4-3-4-3z"/></svg>';}
+function iZangi(){return '<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>';}
 
 // ── INIT ──
-renderTarjeta();
+cargarDatos();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>
